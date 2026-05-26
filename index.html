@@ -2,1905 +2,430 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0a0a0a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="PANDA CHEATS">
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUEFOREEgQ0hFQVRTIiwic2hvcnRfbmFtZSI6IlBBTkRBQ0hFQVRTIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwYTBhMGEiLCJ0aGVtZV9jb2xvciI6IiMwYTBhMGEiLCJpY29ucyI6W3sic3JjIjoiaHR0cHM6Ly9pLmliYi5jby8zeUNtc3hndy9JTUctMjAyNjA1MjAtMjA0MTE4LTk3NC5qcGciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvanBnIn1dfQ==">
-    <title>PANDA CHEATS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#F2F4F8">
+    <title>PANDA WEBAPP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
         :root {
-            --bg: #0a0a0a;
-            --glass: rgba(255,255,255,0.06);
-            --glass-border: rgba(255,255,255,0.08);
-            --glass-highlight: rgba(255,255,255,0.12);
-            --text: #ffffff;
-            --text-secondary: rgba(255,255,255,0.5);
-            --text-muted: rgba(255,255,255,0.35);
-            --accent: #ffffff;
-            --accent-text: #000000;
-            --shadow: rgba(0,0,0,0.3);
-            --radius: 24px;
+            --bg: #F2F4F8;
+            --bg-grad-start: #F2F4F8;
+            --bg-grad-end: #E8ECF3;
+            --surface: #FFFFFF;
+            --text: #1A1D26;
+            --text-secondary: #6B7280;
+            --text-muted: #9CA3AF;
+            --accent: #FFB800;
+            --shadow: rgba(0,0,0,0.06);
+            --shadow-lg: rgba(0,0,0,0.1);
+            --radius: 32px;
+            --radius-sm: 24px;
         }
-        [data-theme="light"] {
-            --bg: #f0f0f5;
-            --glass: rgba(255,255,255,0.6);
-            --glass-border: rgba(255,255,255,0.5);
-            --glass-highlight: rgba(255,255,255,0.9);
-            --text: #1a1a1a;
-            --text-secondary: rgba(0,0,0,0.5);
-            --text-muted: rgba(0,0,0,0.35);
-            --accent: #1a1a1a;
-            --accent-text: #ffffff;
-            --shadow: rgba(0,0,0,0.1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html {
+            height: 100%;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg); color: var(--text);
-            min-height: 100vh; overflow-x: hidden;
-            transition: background 0.5s ease, color 0.5s ease;
         }
-        .particles {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0; overflow: hidden;
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, var(--bg-grad-start) 0%, var(--bg-grad-end) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            color: var(--text);
+            overflow-x: hidden;
         }
-        .particle {
-            position: absolute; width: 3px; height: 3px;
-            background: var(--text-muted); border-radius: 50%;
-            animation: float 15s infinite; opacity: 0.5;
+        /* Header */
+        .header {
+            padding: 24px 20px 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 0.6; } 90% { opacity: 0.6; }
-            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        .brand-block {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            color: var(--text);
+            padding: 14px 36px;
+            border-radius: var(--radius-sm);
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.4);
+            width: fit-content;
+            min-width: 50%;
+            max-width: 90%;
+            text-align: center;
         }
-        .glass {
-            background: var(--glass);
+        /* Segmented Control - WHITE GLASS */
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            padding: 0 20px 16px;
+        }
+        .segmented {
+            display: flex;
+            background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.65) 100%);
+            backdrop-filter: blur(20px) saturate(200%);
+            -webkit-backdrop-filter: blur(20px) saturate(200%);
+            border-radius: 20px;
+            padding: 4px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.6);
+            width: 100%;
+            max-width: 400px;
+        }
+        .segment {
+            flex: 1;
+            text-align: center;
+            padding: 10px 16px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            position: relative;
+            z-index: 1;
+        }
+        .segment.active {
+            background: linear-gradient(135deg, #1A1D26 0%, #3A4050 100%);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        /* Main */
+        .main { position: relative; z-index: 1; padding: 8px 20px 40px; }
+        .page { display: none; animation: fadeIn 0.35s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        /* Title card - CENTERED, WHITE BG */
+        .title-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.72);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            box-shadow: 0 8px 32px var(--shadow), inset 0 1px 0 var(--glass-highlight);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: var(--radius-sm);
+            padding: 14px 28px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 16px var(--shadow), 0 1px 2px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.5);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            min-width: 180px;
         }
-        .glass:hover {
-            background: var(--glass-highlight);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px var(--shadow), inset 0 1px 0 var(--glass-highlight);
-        }
-        .header {
-            position: sticky; top: 0; z-index: 100;
-            background: var(--glass);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 12px 16px;
-            box-shadow: 0 4px 30px var(--shadow);
-        }
-        .header-top {
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 12px;
-        }
-        .logo-section { display: flex; align-items: center; gap: 12px; }
-        .logo {
-            width: 56px; height: 56px; background: var(--accent); border-radius: 50%;
+        .title-card-icon {
+            width: 32px; height: 32px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 800; color: var(--accent-text);
-            line-height: 1.2; text-align: center; box-shadow: 0 0 20px var(--shadow);
-            transition: all 0.3s; flex-shrink: 0; aspect-ratio: 1 / 1;
-            letter-spacing: 0.5px; padding: 4px;
+            color: #fff;
         }
-        .site-title { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: var(--text); }
-        .header-actions { display: flex; align-items: center; gap: 8px; }
-        .icon-btn {
-            width: 40px; height: 40px; border-radius: 50%; background: var(--glass);
-            backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
-            color: var(--text); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 18px; transition: all 0.3s;
-            box-shadow: inset 0 1px 0 var(--glass-highlight);
+        .title-card-icon.green { background: linear-gradient(135deg, #34D399, #10B981); }
+        .title-card-icon.orange { background: linear-gradient(135deg, #FFB800, #FF9500); }
+        .title-card-icon.purple { background: linear-gradient(135deg, #A78BFA, #8B5CF6); }
+        .title-card-text {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.2px;
         }
-        .icon-btn:hover { background: var(--glass-highlight); transform: scale(1.1); }
-        .site-badge {
-            display: flex; align-items: center; gap: 6px; background: var(--glass);
-            backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
-            padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
-            color: var(--text); box-shadow: inset 0 1px 0 var(--glass-highlight);
-        }
-        .site-badge .close { opacity: 0.5; cursor: pointer; transition: opacity 0.2s; }
-        .site-badge .close:hover { opacity: 1; }
-        .nav {
-            display: flex; background: var(--glass); backdrop-filter: blur(10px);
-            border-radius: 32px; padding: 4px; gap: 4px;
-            border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight);
-        }
-        .nav-item {
-            flex: 1; text-align: center; padding: 10px 8px; border-radius: 24px;
-            font-size: 14px; font-weight: 500; color: var(--text-secondary);
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none; background: transparent; font-family: inherit;
-        }
-        .nav-item.active { background: var(--accent); color: var(--accent-text); font-weight: 600; box-shadow: 0 4px 15px var(--shadow); }
-        .nav-item:not(.active):hover { background: var(--glass-highlight); color: var(--text); }
-        .main { position: relative; z-index: 1; padding: 16px; padding-bottom: 100px; }
-        .card { padding: 16px; margin-bottom: 12px; }
-        .card-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
-        .card-subtitle { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-        .hero-banner {
-            background: var(--glass); backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: var(--radius);
-            padding: 40px 20px; text-align: center; margin-bottom: 16px;
+        /* Hero */
+        .hero {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px var(--shadow), 0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6);
             position: relative; overflow: hidden;
-            box-shadow: 0 8px 32px var(--shadow), inset 0 1px 0 var(--glass-highlight);
+            border: 1px solid rgba(255,255,255,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
-        .hero-banner::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+        .hero-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(34,197,94,0.12); color: #16A34A;
+            padding: 8px 18px; border-radius: 20px;
+            font-size: 14px; font-weight: 700;
+            margin-bottom: 16px;
+            border: 1px solid rgba(34,197,94,0.15);
         }
-        .hero-content { position: relative; z-index: 1; }
-        .hero-title { font-size: 28px; font-weight: 800; margin-bottom: 8px; color: var(--text); }
-        .hero-subtitle { font-size: 13px; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase; }
         .status-dot {
             width: 8px; height: 8px; background: #22c55e; border-radius: 50%;
             box-shadow: 0 0 10px rgba(34,197,94,0.5); animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 12px; }
-        .fab {
-            position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px;
-            background: var(--accent); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 8px 30px var(--shadow); z-index: 100; cursor: pointer;
-            border: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .fab:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 12px 40px var(--shadow); }
-        .fab svg { width: 24px; height: 24px; fill: var(--accent-text); }
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(20px);
-            z-index: 1000; display: flex; align-items: center; justify-content: center;
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .hero-title { font-size: 28px; font-weight: 900; letter-spacing: -0.8px; margin-bottom: 8px; color: var(--text); line-height: 1.15; }
+        .hero-subtitle { font-size: 15px; color: var(--text-secondary); font-weight: 500; line-height: 1.5; }
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: var(--radius);
             padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 24px var(--shadow), 0 1px 2px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .modal {
-            background: var(--glass); backdrop-filter: blur(30px) saturate(200%);
-            border: 1px solid var(--glass-border); border-radius: var(--radius);
-            padding: 32px 24px; width: 100%; max-width: 340px; text-align: center;
-            box-shadow: 0 20px 60px var(--shadow), inset 0 1px 0 var(--glass-highlight);
-        }
-        .modal-panda { font-size: 48px; margin-bottom: 16px; }
-        .modal-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-        .modal-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
-        .modal-input {
-            width: 100%; background: var(--glass); backdrop-filter: blur(5px);
-            border: 1px solid var(--glass-border); border-radius: var(--radius);
-            padding: 14px 18px; color: var(--text); font-size: 15px;
-            font-family: inherit; margin-bottom: 12px; outline: none;
-            box-shadow: inset 0 1px 0 var(--glass-highlight); transition: all 0.3s;
-        }
-        .modal-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,255,255,0.1), inset 0 1px 0 var(--glass-highlight); }
-        .modal-input::placeholder { color: var(--text-muted); }
-        .modal-btn {
-            width: 100%; background: var(--accent); color: var(--accent-text);
-            border: none; padding: 14px; border-radius: var(--radius);
-            font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;
-            box-shadow: 0 4px 15px var(--shadow); transition: all 0.3s;
-        }
-        .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--shadow); }
-        .search-bar {
-            display: flex; align-items: center; gap: 10px; background: var(--glass);
-            backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
-            border-radius: 32px; padding: 12px 16px; margin-bottom: 8px;
-            box-shadow: inset 0 1px 0 var(--glass-highlight); transition: all 0.3s;
-            position: relative;
-        }
-        .search-bar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,255,255,0.1), inset 0 1px 0 var(--glass-highlight); }
-        .search-bar input { background: transparent; border: none; color: var(--text); font-size: 15px; font-family: inherit; outline: none; width: 100%; }
-        .search-bar input::placeholder { color: var(--text-muted); }
-        .search-icon { color: var(--text-muted); font-size: 16px; }
-        .search-history {
-            display: flex; flex-wrap: wrap; gap: 6px;
-            margin-bottom: 12px; padding-left: 4px;
-        }
-        .history-tag {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 12px; padding: 4px 10px; font-size: 12px;
-            color: var(--text-secondary); cursor: pointer;
-            display: flex; align-items: center; gap: 4px;
-            transition: all 0.2s;
-        }
-        .history-tag:hover { background: var(--glass-highlight); color: var(--text); }
-        .history-tag .remove { opacity: 0.5; font-size: 14px; }
-        .history-tag .remove:hover { opacity: 1; }
-        .autocomplete-dropdown {
-            position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-            background: var(--glass); backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: 16px;
-            box-shadow: 0 8px 32px var(--shadow); z-index: 50;
-            overflow: hidden; display: none;
-        }
-        .autocomplete-dropdown.show { display: block; }
-        .autocomplete-item {
-            padding: 10px 16px; font-size: 14px; color: var(--text);
-            cursor: pointer; transition: all 0.2s;
-        }
-        .autocomplete-item:hover { background: var(--glass-highlight); }
-        .game-card {
-            background: var(--glass); backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: var(--radius);
-            padding: 16px; margin-bottom: 12px;
-            box-shadow: 0 8px 32px var(--shadow), inset 0 1px 0 var(--glass-highlight);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
-        .game-card:hover {
-            box-shadow: 0 16px 48px var(--shadow), inset 0 1px 0 var(--glass-highlight);
-        }
-        .game-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-        .game-icon {
-            width: 56px; height: 56px; border-radius: 20px;
-            background: linear-gradient(135deg, #333, #111);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px; overflow: hidden; border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight); flex-shrink: 0;
-        }
-        .game-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 20px; }
-        .game-info { flex: 1; min-width: 0; }
-        .game-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
-        .game-version { font-size: 13px; color: var(--text-muted); }
-        .game-downloads {
-            display: flex; align-items: center; gap: 4px; background: var(--glass);
-            backdrop-filter: blur(5px); padding: 6px 12px; border-radius: 12px;
-            font-size: 13px; color: var(--text-secondary); border: 1px solid var(--glass-border);
-        }
-        .game-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-        .stat-box {
-            background: var(--glass); backdrop-filter: blur(5px); border-radius: 20px;
-            padding: 14px 8px; text-align: center; border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight); transition: all 0.3s;
-        }
-        .stat-box:hover { transform: scale(1.05); background: var(--glass-highlight); }
-        .stat-icon { font-size: 20px; margin-bottom: 6px; }
-        .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
-        .stat-value { font-size: 15px; font-weight: 700; color: var(--text); }
-        .download-btn {
-            width: 100%; background: var(--accent); color: var(--accent-text);
-            border: none; padding: 14px; border-radius: var(--radius); font-size: 15px;
-            font-weight: 600; cursor: pointer; display: flex; align-items: center;
-            justify-content: center; gap: 8px; font-family: inherit; margin-bottom: 10px;
-            box-shadow: 0 4px 15px var(--shadow); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; overflow: hidden;
-        }
-        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--shadow); }
-        .download-btn::after {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            width: 0; height: 0; background: rgba(255,255,255,0.2);
-            border-radius: 50%; transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        .download-btn:active::after { width: 300px; height: 300px; }
-        @keyframes pulse-btn {
-            0%, 100% { box-shadow: 0 4px 15px var(--shadow); }
-            50% { box-shadow: 0 4px 25px var(--shadow), 0 0 15px rgba(255,255,255,0.1); }
-        }
-        .download-btn.pulse { animation: pulse-btn 2s infinite; }
-        .accordion {
-            background: var(--glass); backdrop-filter: blur(5px); border-radius: 20px;
-            padding: 14px 16px; display: flex; align-items: center; justify-content: space-between;
-            cursor: pointer; border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight); transition: all 0.3s;
-        }
-        .accordion:hover { background: var(--glass-highlight); }
-        .accordion-left { display: flex; align-items: center; gap: 10px; }
-        .accordion-icon { font-size: 18px; }
-        .accordion-text { font-size: 15px; font-weight: 500; color: var(--text); }
-        .accordion-arrow { color: var(--text-muted); font-size: 14px; transition: transform 0.3s; }
-        .accordion.open .accordion-arrow { transform: rotate(180deg); }
-        .accordion-content {
-            display: none; padding: 16px; font-size: 14px;
-            color: var(--text-secondary); line-height: 1.7;
-            border-top: 1px solid var(--glass-border); margin-top: 0;
-            animation: fadeIn 0.3s ease;
-        }
-        .accordion-content.show { display: block; }
-        .empty-state {
-            border: 2px dashed var(--glass-border); border-radius: var(--radius);
-            padding: 30px 20px; display: flex; align-items: center; gap: 16px;
-            background: var(--glass); backdrop-filter: blur(5px);
-        }
-        .empty-icon {
-            width: 56px; height: 56px; background: var(--glass); border-radius: 20px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px; flex-shrink: 0; border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight);
-        }
-        .empty-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; text-align: left; color: var(--text); }
-        .empty-subtitle { font-size: 13px; color: var(--text-muted); text-align: left; }
-        .about-hero { text-align: center; padding: 30px 20px; }
-        .about-logo {
-            width: 100px; height: 100px; background: var(--accent); border-radius: 50%;
-            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: 800; color: var(--accent-text); line-height: 1.1;
-            text-align: center; box-shadow: 0 0 40px var(--shadow); border: 2px solid var(--glass-border);
-        }
-        .about-title { font-size: 24px; font-weight: 800; margin-bottom: 12px; color: var(--text); }
-        .about-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 300px; margin: 0 auto; }
-        .section-title { font-size: 18px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
-        .resource-item {
-            display: flex; align-items: center; gap: 14px; background: var(--accent);
-            color: var(--accent-text); border-radius: 20px; padding: 14px 16px;
-            margin-bottom: 10px; box-shadow: 0 4px 15px var(--shadow); transition: all 0.3s;
-            text-decoration: none;
-        }
-        .resource-item:hover { transform: translateX(4px); }
-        .resource-item.dark { background: var(--glass); backdrop-filter: blur(10px); color: var(--text); border: 1px solid var(--glass-border); }
-        .resource-icon { width: 44px; height: 44px; background: rgba(0,0,0,0.08); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-        .resource-item.dark .resource-icon { background: var(--glass); border: 1px solid var(--glass-border); }
-        .resource-info { flex: 1; }
-        .resource-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-        .resource-handle { font-size: 13px; opacity: 0.6; }
-        .resource-arrow { font-size: 18px; opacity: 0.4; }
-        .share-section { margin-top: 8px; }
-        .share-box {
-            display: flex; align-items: center; gap: 10px; background: var(--glass);
-            backdrop-filter: blur(5px); border-radius: 20px; padding: 12px 14px;
-            margin-bottom: 10px; border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight);
-        }
-        .share-url { flex: 1; font-size: 13px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .share-copy { color: var(--text-secondary); font-size: 16px; cursor: pointer; transition: all 0.2s; }
-        .share-copy:hover { color: var(--text); transform: scale(1.2); }
-        .share-buttons { display: flex; gap: 10px; }
-        .share-btn {
-            flex: 1; padding: 12px; border-radius: 20px; font-size: 14px; font-weight: 500;
-            cursor: pointer; border: none; font-family: inherit;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-            transition: all 0.3s;
-        }
-        .share-btn.secondary { background: var(--glass); backdrop-filter: blur(5px); color: var(--text); border: 1px solid var(--glass-border); box-shadow: inset 0 1px 0 var(--glass-highlight); }
-        .share-btn.secondary:hover { background: var(--glass-highlight); }
-        .share-btn.primary { background: var(--accent); color: var(--accent-text); box-shadow: 0 4px 15px var(--shadow); }
-        .share-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--shadow); }
-        .rating-section { text-align: center; padding: 20px 0; }
-        .rating-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); }
-        .stars { display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; }
-        .star { font-size: 28px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
-        .star:hover { transform: scale(1.2); }
-        .star.active { color: var(--text); text-shadow: 0 0 12px rgba(255,255,255,0.3); }
-        .rating-average { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
-        .rating-average span { color: #ffd700; font-weight: 700; }
-        .toast {
-            position: fixed; bottom: 100px; left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--accent); color: var(--accent-text);
-            padding: 12px 24px; border-radius: 24px; font-size: 14px; font-weight: 500;
-            z-index: 2000; opacity: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap; box-shadow: 0 8px 30px var(--shadow); backdrop-filter: blur(10px);
-        }
-        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .page { display: none; animation: fadeIn 0.4s ease; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        *, *::before, *::after { transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease; }
-
-        /* NEWS */
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--shadow-lg); }
+        /* News rows - COMPACT, CENTERED, NO UNDERLINE */
         .news-list { display: flex; flex-direction: column; gap: 10px; }
         .news-row {
-            display: flex; align-items: center; gap: 14px;
-            background: var(--glass); backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border); border-radius: 20px;
-            padding: 14px 16px; cursor: pointer;
-            box-shadow: inset 0 1px 0 var(--glass-highlight);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.4);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
         }
-        .news-row:hover { transform: translateX(6px); background: var(--glass-highlight); }
+        .news-row:hover { transform: scale(1.02); background: rgba(255, 255, 255, 0.7); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
         .news-row-icon {
-            width: 44px; height: 44px; border-radius: 14px;
-            background: var(--glass); border: 1px solid var(--glass-border);
+            width: 40px; height: 40px; border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 20px; flex-shrink: 0;
-            box-shadow: inset 0 1px 0 var(--glass-highlight);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .news-row-content { flex: 1; min-width: 0; }
-        .news-row-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .news-row-desc { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .news-row-arrow { color: var(--text-muted); font-size: 14px; transition: transform 0.3s; }
-        .news-row:hover .news-row-arrow { transform: translateX(4px); color: var(--text); }
+        .news-row-icon.green { background: linear-gradient(135deg, #34D399, #10B981); box-shadow: 0 2px 8px rgba(16,185,129,0.25); }
+        .news-row-icon.blue { background: linear-gradient(135deg, #60A5FA, #3B82F6); box-shadow: 0 2px 8px rgba(59,130,246,0.25); }
+        .news-row-content { text-align: center; }
+        .news-row-title { font-size: 15px; font-weight: 700; color: var(--text); text-decoration: none; }
+        .news-row-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; text-decoration: none; }
+        .news-row-arrow { color: var(--text-muted); transition: all 0.3s; margin-top: 2px; }
+        .news-row:hover .news-row-arrow { transform: translateX(4px); color: var(--text-secondary); }
+        /* Empty state - CENTERED */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .empty-icon { font-size: 56px; filter: grayscale(30%); }
+        .empty-title { font-size: 18px; font-weight: 700; color: var(--text); }
+        .empty-subtitle { font-size: 14px; color: var(--text-muted); }
+        /* Lucide icon sizing */
+        .lucide { width: 20px; height: 20px; stroke-width: 2.5; }
+        .lucide-sm { width: 16px; height: 16px; stroke-width: 2.5; }
+        .lucide-lg { width: 22px; height: 22px; stroke-width: 2; }
+        .lucide-xl { width: 28px; height: 28px; stroke-width: 2; }
+    
+        /* Game Card */
+        .game-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(135deg, #FAFBFC, #F5F7FA);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+        .game-card:hover { transform: scale(1.02); background: linear-gradient(135deg, #FFF, #F0F2F5); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .game-icon {
+            width: 56px; height: 56px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; flex-shrink: 0;
+            background: linear-gradient(135deg, #FFB800, #FF9500);
+            box-shadow: 0 2px 8px rgba(255,184,0,0.25);
+        }
+        .game-info { flex: 1; min-width: 0; }
+        .game-title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+        .game-meta { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+        .game-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+        .game-arrow { color: var(--text-muted); transition: all 0.3s; flex-shrink: 0; }
+        .game-card:hover .game-arrow { transform: translateX(4px); color: var(--text-secondary); }
 
-        /* REVIEWS */
-        .reviews-container { display: flex; flex-direction: column; gap: 12px; }
-        .review-card {
-            background: var(--glass); backdrop-filter: blur(10px); border-radius: 20px;
-            padding: 16px 18px; border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight), 0 4px 16px var(--shadow);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; overflow: hidden;
+    
+        /* Game Screenshot */
+        .game-screenshot {
+            width: 100%;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: block;
         }
-        .review-card::before {
-            content: '"'; position: absolute; top: -8px; right: 12px;
-            font-size: 64px; color: var(--text-muted); opacity: 0.08;
-            font-family: Georgia, serif; line-height: 1; pointer-events: none;
-        }
-        .review-card:hover { transform: translateY(-3px) translateX(2px); background: var(--glass-highlight); box-shadow: 0 8px 24px var(--shadow), inset 0 1px 0 var(--glass-highlight); }
-        .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-        .review-avatar {
-            width: 40px; height: 40px; border-radius: 50%;
-            background: var(--accent); color: var(--accent-text);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; font-weight: 700; flex-shrink: 0;
-            box-shadow: 0 2px 8px var(--shadow);
-        }
-        .review-meta { flex: 1; min-width: 0; }
-        .review-author { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-        .review-stars { color: #ffd700; font-size: 12px; letter-spacing: 2px; filter: grayscale(100%); }
-        .review-date { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-        .review-text { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-left: 52px; }
-        .review-actions { display: flex; align-items: center; gap: 12px; margin-top: 10px; margin-left: 52px; }
-        .review-like { font-size: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 4px; user-select: none; }
-        .review-like:hover { color: var(--text); transform: scale(1.05); }
-        .review-like.liked { color: var(--text); font-weight: 600; }
-        .review-reply-btn, .review-report-btn {
-            font-size: 12px; color: var(--text-muted); cursor: pointer;
-            transition: all 0.2s; user-select: none;
-        }
-        .review-reply-btn:hover, .review-report-btn:hover { color: var(--text); }
-        .replies-container {
-            margin-left: 52px; margin-top: 12px;
-            padding-left: 12px; border-left: 2px solid var(--glass-border);
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .reply-card {
-            background: var(--glass); border-radius: 16px;
-            padding: 12px 14px; font-size: 13px;
-            border: 1px solid var(--glass-border);
-        }
-        .reply-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-        .reply-avatar {
-            width: 28px; height: 28px; border-radius: 50%;
-            background: var(--accent); color: var(--accent-text);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: 700;
-        }
-        .reply-author { font-weight: 600; font-size: 13px; color: var(--text); }
-        .reply-date { font-size: 11px; color: var(--text-muted); }
-        .reply-text { color: var(--text-secondary); line-height: 1.5; }
-        .reply-form {
-            margin-left: 52px; margin-top: 10px;
-            display: none; animation: fadeIn 0.3s ease;
-        }
-        .reply-form.show { display: flex; flex-direction: column; gap: 8px; }
-        .reply-input {
-            background: rgba(0,0,0,0.15); border: 1px solid var(--glass-border);
-            border-radius: 14px; padding: 10px 14px; color: var(--text);
-            font-family: inherit; font-size: 13px; outline: none; resize: vertical;
-            min-height: 60px;
-        }
-        .reply-input:focus { border-color: var(--accent); }
-        .reply-submit {
-            align-self: flex-end; background: var(--accent); color: var(--accent-text);
-            border: none; padding: 8px 16px; border-radius: 14px;
-            font-size: 13px; font-weight: 600; cursor: pointer;
+        /* Download Button */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #FFB800 0%, #FF9500 100%);
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255,184,0,0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            width: 100%;
             font-family: inherit;
         }
-
-        .review-input-wrapper {
-            background: var(--glass); backdrop-filter: blur(5px); border-radius: 20px;
-            padding: 16px; border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight); margin-top: 16px;
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,184,0,0.4);
         }
-        .review-input-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-        .review-input {
-            width: 100%; background: rgba(0,0,0,0.15); border: 1px solid var(--glass-border);
-            border-radius: 16px; padding: 12px 16px; color: var(--text); font-size: 14px;
-            font-family: inherit; outline: none; resize: vertical; min-height: 80px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s;
+        .download-btn:active {
+            transform: scale(0.98);
         }
-        .review-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,255,255,0.08), inset 0 2px 4px rgba(0,0,0,0.1); }
-        .review-input::placeholder { color: var(--text-muted); }
-        .review-submit-btn {
-            width: 100%; background: var(--accent); color: var(--accent-text);
-            border: none; padding: 12px; border-radius: 16px; font-size: 14px;
-            font-weight: 600; cursor: pointer; font-family: inherit; margin-top: 10px;
-            box-shadow: 0 4px 15px var(--shadow); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; align-items: center; justify-content: center; gap: 6px;
+        .game-card-full {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .review-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--shadow); }
-        .reviews-divider {
-            height: 1px; background: var(--glass-border); margin: 16px 0;
-            box-shadow: 0 1px 0 var(--glass-highlight);
+        .game-card-full:hover {
+            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
         }
-        .show-more-btn {
-            width: 100%; background: var(--glass); backdrop-filter: blur(5px);
-            border: 1px solid var(--glass-border); border-radius: 20px;
-            padding: 12px; color: var(--text-secondary); font-family: inherit;
-            font-size: 14px; font-weight: 500; cursor: pointer;
-            box-shadow: inset 0 1px 0 var(--glass-highlight); transition: all 0.3s;
-            margin-top: 4px;
+        .game-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
         }
-        .show-more-btn:hover { background: var(--glass-highlight); color: var(--text); }
-        .hidden-review { display: none; }
-
-        /* PROFILE */
-        .profile-hero {
-            text-align: center; padding: 30px 20px;
-        }
-        .profile-avatar-large {
-            width: 80px; height: 80px; border-radius: 50%;
-            background: var(--accent); color: var(--accent-text);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 28px; font-weight: 800; margin: 0 auto 16px;
-            box-shadow: 0 4px 20px var(--shadow); border: 3px solid var(--glass-border);
-            transition: all 0.3s;
-        }
-        .profile-avatar-large:hover { transform: scale(1.05); box-shadow: 0 6px 24px var(--shadow); }
-        .profile-avatar-large:hover #avatarOverlay { display: block !important; }
-        .profile-name { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-        .profile-role { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
-        .profile-stats-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-        }
-        .profile-stat {
-            background: var(--glass); border-radius: 20px; padding: 16px 8px;
-            text-align: center; border: 1px solid var(--glass-border);
-            box-shadow: inset 0 1px 0 var(--glass-highlight);
-        }
-        .profile-stat-value { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-        .profile-stat-label { font-size: 12px; color: var(--text-muted); }
-        .profile-section-title {
-            font-size: 16px; font-weight: 700; color: var(--text);
-            margin: 20px 0 12px; display: flex; align-items: center; gap: 8px;
-        }
-        .activity-item {
-            display: flex; align-items: center; gap: 12px;
-            background: var(--glass); border-radius: 16px; padding: 12px 14px;
-            margin-bottom: 8px; border: 1px solid var(--glass-border);
-        }
-        .activity-icon { font-size: 20px; }
-        .activity-text { font-size: 14px; color: var(--text-secondary); }
-        .activity-date { font-size: 11px; color: var(--text-muted); margin-left: auto; }
-
-        /* ONLINE COUNTER */
-        .online-badge {
-            display: flex; align-items: center; gap: 6px;
-            background: var(--glass); border: 1px solid var(--glass-border);
-            padding: 6px 12px; border-radius: 20px; font-size: 12px;
-            color: var(--text-secondary); margin-bottom: 12px;
-            box-shadow: inset 0 1px 0 var(--glass-highlight);
-        }
-        .online-dot {
-            width: 6px; height: 6px; background: #22c55e; border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        /* REPORT MODAL */
-        .report-reason {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 16px; padding: 12px; margin-bottom: 8px;
-            cursor: pointer; transition: all 0.2s; text-align: left;
-            color: var(--text); font-size: 14px;
-        }
-        .report-reason:hover { background: var(--glass-highlight); }
-        .report-reason.selected { border-color: var(--accent); background: var(--glass-highlight); }
-
-        /* MODERN B&W EMOJI */
-        .sym-search::before { content: "🔎"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-download::before { content: "📥"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-info::before { content: "ℹ️"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-arrow::before { content: "➜"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-arrow-down::before { content: "▾"; font-size: 18px; filter: grayscale(100%) contrast(120%); }
-        .sym-copy::before { content: "📄"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-globe::before { content: "🌍"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-shield::before { content: "🛡️"; font-size: 20px; filter: grayscale(100%) contrast(120%); }
-        .sym-pc::before { content: "💻"; font-size: 18px; filter: grayscale(100%) contrast(120%); }
-        .sym-android::before { content: "📱"; font-size: 18px; filter: grayscale(100%) contrast(120%); }
-        .sym-status::before { content: "✔️"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-telegram::before { content: "✈️"; font-size: 18px; filter: grayscale(100%) contrast(120%); }
-        .sym-share::before { content: "🔗"; font-size: 18px; filter: grayscale(100%) contrast(120%); }
-        .sym-news::before { content: "📰"; font-size: 18px; filter: grayscale(100%) contrast(120%); }
-        .sym-wrench::before { content: "🔧"; font-size: 22px; filter: grayscale(100%) contrast(120%); }
-        .sym-monitor::before { content: "🖥️"; font-size: 22px; filter: grayscale(100%) contrast(120%); }
-        .sym-sun::before { content: "☀️"; font-size: 20px; filter: grayscale(100%) contrast(120%); }
-        .sym-moon::before { content: "🌙"; font-size: 20px; filter: grayscale(100%) contrast(120%); }
-        .sym-star::before { content: "⭐"; font-size: 22px; filter: grayscale(100%) contrast(120%); }
-        .sym-user::before { content: "👤"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-quote::before { content: "💬"; font-size: 14px; filter: grayscale(100%) contrast(120%); }
-        .sym-like::before { content: "👍"; font-size: 14px; filter: grayscale(100%) contrast(120%); }
-        .sym-reply::before { content: "↩️"; font-size: 14px; filter: grayscale(100%) contrast(120%); }
-        .sym-report::before { content: "⚠️"; font-size: 14px; filter: grayscale(100%) contrast(120%); }
-        .sym-clock::before { content: "⏱️"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .sym-fire::before { content: "🔥"; font-size: 16px; filter: grayscale(100%) contrast(120%); }
-        .fav-btn { transition: all 0.3s; color: var(--text-muted); }
-        .fav-btn.active { color: #ffd700; transform: scale(1.15); border-color: rgba(255,215,0,0.4); background: rgba(255,215,0,0.1); }
-    
-        .download-progress-container {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-            background: rgba(255,255,255,0.1); border-radius: 0 0 var(--radius) var(--radius);
-            overflow: hidden; display: none;
-        }
-        .download-progress-bar {
-            height: 100%; width: 0%; background: #22c55e;
-            transition: width 0.3s ease; border-radius: 0 0 var(--radius) var(--radius);
-        }
-        .download-btn.loading .download-progress-container { display: block; }
-        .download-btn.loading { pointer-events: none; opacity: 0.9; }
-        .game-rating {
-            display: flex; align-items: center; gap: 6px; margin-bottom: 12px;
-        }
-        .game-rating-stars { color: #ffd700; font-size: 14px; letter-spacing: 1px; }
-        .game-rating-count { font-size: 12px; color: var(--text-muted); }
-        .game-rating-btn {
-            background: transparent; border: none; color: var(--text-muted);
-            font-size: 16px; cursor: pointer; padding: 0 2px; transition: all 0.2s;
-        }
-        .game-rating-btn:hover, .game-rating-btn.active { color: #ffd700; transform: scale(1.2); }
 
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-
     <header class="header">
-        <div class="header-top">
-            <div class="logo-section">
-                <div class="logo">PANDA<br>CHEATS</div>
-                <div class="site-title">PANDA CHEATS</div>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;">
-                <div style="display:flex;flex-direction:column;align-items:stretch;gap:6px;min-width:140px;">
-                    <div class="site-badge" id="userBadge" style="width:100%;justify-content:center;">
-                        <span class="sym-user"></span>
-                        <span>Гость</span>
-                    </div>
-                    <div class="online-badge" id="onlineBadge" style="display:none;width:100%;justify-content:center;">
-                        <div class="online-dot"></div>
-                        <span id="onlineCount">0</span> онлайн
-                    </div>
-                </div>
-                <button class="icon-btn" onclick="toggleTheme()" id="themeBtn"><span class="sym-sun"></span></button>
-            </div>
-        </div>
-        <nav class="nav">
-            <button class="nav-item active" onclick="showPage('home')">Главная</button>
-            <button class="nav-item" onclick="showPage('games')">Игры</button>
-            <button class="nav-item" onclick="showPage('apps')">Прил.</button>
-            <button class="nav-item" onclick="showPage('profile')">Профиль</button>
-            <button class="nav-item" onclick="showPage('about')">О нас</button>
-        </nav>
+        <div class="brand-block">PANDA WEBAPP</div>
     </header>
+
+    <div class="nav-bar">
+        <div class="segmented">
+            <button class="segment active" onclick="switchTab('home', this)">Главная</button>
+            <button class="segment" onclick="switchTab('games', this)">Игры</button>
+        </div>
+    </div>
 
     <main class="main">
         <!-- HOME -->
         <div class="page active" id="page-home">
-            <div class="hero-banner">
-                <div class="hero-content">
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px;">
-                        <div class="status-dot"></div>
-                        <div class="hero-title" style="margin: 0; font-size: 22px;">Система обновлена</div>
-                    </div>
-                    <div class="hero-subtitle">До последней версии - Все системы активны</div>
+            <div class="title-card">
+                <div class="title-card-icon green">
+                    <i data-lucide="settings" class="lucide-sm"></i>
                 </div>
+                <div class="title-card-text">Система</div>
+            </div>
+            <div class="hero">
+                <div class="hero-status">
+                    <div class="status-dot"></div>
+                    <span>Система обновлена</span>
+                </div>
+                <div class="hero-title">Система обновлена</div>
+                <div class="hero-subtitle">До последней версии — Все системы активны</div>
             </div>
 
-            <div class="card glass">
-                <div class="section-title" style="margin-bottom: 12px;"><span class="sym-news"></span> Новости</div>
+            <div class="title-card">
+                <div class="title-card-icon orange">
+                    <i data-lucide="newspaper" class="lucide-sm"></i>
+                </div>
+                <div class="title-card-text">Новости</div>
+            </div>
+            <div class="card">
                 <div class="news-list">
-                    <a href="https://t.me/+YiCQpV4ixLhlNWVi" target="_blank" style="text-decoration: none; color: inherit;">
-                        <div class="news-row">
-                            <div class="news-row-icon"><span class="sym-telegram"></span></div>
-                            <div class="news-row-content">
-                                <div class="news-row-title">Канал в Telegram</div>
-                                <div class="news-row-desc">Подпишитесь - узнавайте о релизах первыми</div>
-                            </div>
-                            <div class="news-row-arrow"><span class="sym-arrow"></span></div>
+                    <div class="news-row" onclick="window.open('https://t.me/+YiCQpV4ixLhlNWVi','_blank')">
+                        <div class="news-row-icon green">
+                            <i data-lucide="send" class="lucide-lg"></i>
                         </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="card glass">
-                <div class="section-title" style="margin-bottom: 12px;"><span class="sym-fire"></span> Топ загрузок</div>
-                <div id="topDownloads">
-                    <div class="news-row" style="margin-bottom:10px;">
-                        <div class="news-row-icon sym-fire" style="font-size: 20px;"></div>
                         <div class="news-row-content">
-                            <div class="news-row-title" id="top1-name">StandChillow</div>
-                            <div class="news-row-desc" id="top1-count">0 скачиваний</div>
+                            <div class="news-row-title">Telegram Channel</div>
+                            <div class="news-row-desc">Подпишитесь — узнавайте о релизах первыми</div>
                         </div>
-                    </div>
-                    <div class="news-row" style="margin-bottom:10px;">
-                        <div class="news-row-icon sym-fire" style="font-size: 20px;"></div>
-                        <div class="news-row-content">
-                            <div class="news-row-title" id="top2-name">PANDA SNAKE IO</div>
-                            <div class="news-row-desc" id="top2-count">0 скачиваний</div>
+                        <div class="news-row-arrow">
+                            <i data-lucide="arrow-right" class="lucide-sm"></i>
                         </div>
                     </div>
                     <div class="news-row">
-                        <div class="news-row-icon sym-fire" style="font-size: 20px;"></div>
+                        <div class="news-row-icon blue">
+                            <i data-lucide="refresh-cw" class="lucide-lg"></i>
+                        </div>
                         <div class="news-row-content">
-                            <div class="news-row-title" id="top3-name">Panda Block</div>
-                            <div class="news-row-desc" id="top3-count">0 скачиваний</div>
+                            <div class="news-row-title">Версия v.1.0</div>
+                            <div class="news-row-desc">Новые функции и улучшения производительности</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="footer">сайт 2026 PANDA CHEATS - Все права защищены</div>
         </div>
 
         <!-- GAMES -->
         <div class="page" id="page-games">
-            <div class="search-bar">
-                <span class="search-icon sym-search"></span>
-                <input type="text" placeholder="Поиск игры..." id="gameSearch" oninput="handleSearch(this.value)" onfocus="showAutocomplete('')">
-                <div class="autocomplete-dropdown" id="gameAutocomplete"></div>
+            <div class="title-card">
+                <div class="title-card-icon purple">
+                    <i data-lucide="gamepad-2" class="lucide-sm"></i>
+                </div>
+                <div class="title-card-text">Игры</div>
             </div>
-            <div class="search-history" id="searchHistory"></div>
-
-            <div class="hero-banner">
-                <div class="hero-content">
-                    <div class="hero-title">Игры обновлены</div>
-                    <div class="hero-subtitle">До последней версии - Android & IOS</div>
-                </div>
-            </div>
-
-            <div class="game-card" data-game="standchillow">
-                <div class="game-header">
-                    <div class="game-icon"><img src="https://i.ibb.co/3yCmsxgw/IMG-20260520-204118-974.jpg" alt="StandChillow"></div>
-                    <div class="game-info">
-                        <div class="game-name">StandChillow</div>
-                        <div class="game-version">Версия: 2.05 - Android 8+</div>
+            <div class="card">
+                <div class="game-card-full">
+                    <img src="panda_snake_io.png" alt="PANDA SNAKE IO" class="game-screenshot" loading="lazy">
+                    <div style="text-align: center; margin-bottom: 4px;">
+                        <div class="game-title" style="margin-bottom: 4px;">PANDA SNAKE IO</div>
+                        <div class="game-meta">v1.0.0 · 20 МБ</div>
                     </div>
-                    <div class="game-downloads"><span class="sym-download"></span><span id="dl-standchillow">0</span></div>
-                    <button class="icon-btn fav-btn" id="fav-standchillow" onclick="toggleFavorite('standchillow')" title="В избранное" style="width:36px;height:36px;font-size:18px;">☆</button>
-                </div>
-                <div class="game-rating" id="rating-standchillow">
-                    <span class="game-rating-stars" id="stars-standchillow">⭐⭐⭐⭐⭐</span>
-                    <span class="game-rating-count" id="count-standchillow">5.0 (0)</span>
-                    <span style="margin-left:auto;display:flex;gap:2px;">
-                        <button class="game-rating-btn" onclick="saveGameRating('standchillow',1)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('standchillow',2)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('standchillow',3)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('standchillow',4)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('standchillow',5)">★</button>
-                    </span>
-                </div>
-                <div class="game-stats">
-                    <div class="stat-box">
-                        <div class="stat-icon sym-pc"></div>
-                        <div class="stat-label">Размер</div>
-                        <div class="stat-value">1.8 GB</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-icon sym-android"></div>
-                        <div class="stat-label">Android</div>
-                        <div class="stat-value">8.0+</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-icon sym-status"></div>
-                        <div class="stat-label">Статус</div>
-                        <div class="stat-value">Актив</div>
-                    </div>
-                </div>
-                <a href="https://www.dropbox.com/scl/fi/er5ibbnb808nre2jbdz5g/STANDCHILLOW-2.05.apk?rlkey=d9m84t8osnase4n4ljmgnjau6&st=5g1pbw7d&dl=1" target="_blank" style="text-decoration: none;">
-                    <button class="download-btn pulse" onclick="downloadGame('standchillow')" id="btn-standchillow">
-                        <span>Скачать APK</span>
-                        <div class="download-progress-container"><div class="download-progress-bar" id="prog-standchillow"></div></div>
-                    </button>
-                </a>
-                <div class="accordion" onclick="toggleAccordion(this)">
-                    <div class="accordion-left">
-                        <span class="accordion-icon sym-info"></span>
-                        <span class="accordion-text">О чите и функциях</span>
-                    </div>
-                    <span class="accordion-arrow sym-arrow-down"></span>
-                </div>
-                <div class="accordion-content">
-                    <strong>Описание обновления:</strong> Фикс багов. Обновлена версия. Много другого.<br><br>
-                    <strong>Функции чита:</strong> Aim, ESP, Hitbox.
-                </div>
-            </div>
-
-            <div class="game-card" data-game="pandasnake">
-                <div class="game-header">
-                    <div class="game-icon"><img src="https://i.ibb.co/Fkv0hjnT/Photoroom-20260522-015834614.png" alt="PANDA SNAKE IO"></div>
-                    <div class="game-info">
-                        <div class="game-name">PANDA SNAKE IO</div>
-                        <div class="game-version">Версия: 1.0 - Android 8+</div>
-                    </div>
-                    <div class="game-downloads"><span class="sym-download"></span><span id="dl-pandasnake">0</span></div>
-                    <button class="icon-btn fav-btn" id="fav-pandasnake" onclick="toggleFavorite('pandasnake')" title="В избранное" style="width:36px;height:36px;font-size:18px;">☆</button>
-                </div>
-                <div class="game-rating" id="rating-pandasnake">
-                    <span class="game-rating-stars" id="stars-pandasnake">⭐⭐⭐⭐⭐</span>
-                    <span class="game-rating-count" id="count-pandasnake">5.0 (0)</span>
-                    <span style="margin-left:auto;display:flex;gap:2px;">
-                        <button class="game-rating-btn" onclick="saveGameRating('pandasnake',1)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('pandasnake',2)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('pandasnake',3)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('pandasnake',4)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('pandasnake',5)">★</button>
-                    </span>
-                </div>
-                <div class="game-stats">
-                    <div class="stat-box">
-                        <div class="stat-icon sym-pc"></div>
-                        <div class="stat-label">Размер</div>
-                        <div class="stat-value">10 MB</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-icon sym-android"></div>
-                        <div class="stat-label">Android</div>
-                        <div class="stat-value">8.0+</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-icon sym-status"></div>
-                        <div class="stat-label">Статус</div>
-                        <div class="stat-value">Актив</div>
-                    </div>
-                </div>
-                <a href="https://www.dropbox.com/scl/fi/ygb5xgugnclyolcazpuvl/Panda_Snake_mod.apk?rlkey=3f0p59v8z9zkac16cy6j545hl&st=e749temt&dl=1" target="_blank" style="text-decoration: none;">
-                    <button class="download-btn pulse" onclick="downloadGame('pandasnake')" id="btn-pandasnake">
-                        <span>Скачать APK</span>
-                        <div class="download-progress-container"><div class="download-progress-bar" id="prog-pandasnake"></div></div>
-                    </button>
-                </a>
-                <div class="accordion" onclick="toggleAccordion(this)">
-                    <div class="accordion-left">
-                        <span class="accordion-icon sym-info"></span>
-                        <span class="accordion-text">О игре и функциях</span>
-                    </div>
-                    <span class="accordion-arrow sym-arrow-down"></span>
-                </div>
-                <div class="accordion-content">
-                    <strong>Описание:</strong> Игра от разработчика сайта.
-                </div>
-            </div>
-
-            <div class="game-card" data-game="pandablock">
-                <div class="game-header">
-                    <div class="game-icon"><img src="https://s10.iimage.su/s/22/gKZuLkUxz6hEUZfi99Y1NlupdHOH1AMwUR3eP97Gk.png" alt="Panda Block"></div>
-                    <div class="game-info">
-                        <div class="game-name">Panda Block</div>
-                        <div class="game-version">Версия: 1.0 - Android 8+</div>
-                    </div>
-                    <div class="game-downloads"><span class="sym-download"></span><span id="dl-pandablock">0</span></div>
-                    <button class="icon-btn fav-btn" id="fav-pandablock" onclick="toggleFavorite('pandablock')" title="В избранное" style="width:36px;height:36px;font-size:18px;">☆</button>
-                </div>
-                <div class="game-rating" id="rating-pandablock">
-                    <span class="game-rating-stars" id="stars-pandablock">⭐⭐⭐⭐⭐</span>
-                    <span class="game-rating-count" id="count-pandablock">5.0 (0)</span>
-                    <span style="margin-left:auto;display:flex;gap:2px;">
-                        <button class="game-rating-btn" onclick="saveGameRating('pandablock',1)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('pandablock',2)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('pandablock',3)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('pandablock',4)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('pandablock',5)">★</button>
-                    </span>
-                </div>
-                <div class="game-stats">
-                    <div class="stat-box">
-                        <div class="stat-icon sym-pc"></div>
-                        <div class="stat-label">Размер</div>
-                        <div class="stat-value">10 MB</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-icon sym-android"></div>
-                        <div class="stat-label">Android</div>
-                        <div class="stat-value">8.0+</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-icon sym-status"></div>
-                        <div class="stat-label">Статус</div>
-                        <div class="stat-value">Актив</div>
-                    </div>
-                </div>
-                <a href="https://www.dropbox.com/scl/fi/q8zciq1r9w5qprfcg1z39/Panda_Block_1_mod_sign.apk?rlkey=2ex3nd8p1gkgnosx37l7iez0g&st=rruhjnww&dl=1" target="_blank" style="text-decoration: none;">
-                    <button class="download-btn pulse" onclick="downloadGame('pandablock')" id="btn-pandablock">
-                        <span>Скачать APK</span>
-                        <div class="download-progress-container"><div class="download-progress-bar" id="prog-pandablock"></div></div>
-                    </button>
-                </a>
-                <div class="accordion" onclick="toggleAccordion(this)">
-                    <div class="accordion-left">
-                        <span class="accordion-icon sym-info"></span>
-                        <span class="accordion-text">О игре и функциях</span>
-                    </div>
-                    <span class="accordion-arrow sym-arrow-down"></span>
-                </div>
-                <div class="accordion-content">
-                    <strong>Описание:</strong> Игра от разработчика сайта.
-                </div>
-            </div>
-
-            <div class="game-card" data-game="standleolite">
-                <div class="game-header">
-                    <div class="game-icon"><img src="https://videotourl.com/images/1779444288063-03f2cf4c-cd7e-4c82-87c8-8ff6a44c95c4.jpg" alt="StandLeo Lite"></div>
-                    <div class="game-info">
-                        <div class="game-name">StandLeo Lite</div>
-                        <div class="game-version">Версия: 1.21 - iOS 15+</div>
-                    </div>
-                    <div class="game-downloads"><span class="sym-download"></span><span id="dl-standleolite">0</span></div>
-                    <button class="icon-btn fav-btn" id="fav-standleolite" onclick="toggleFavorite('standleolite')" title="В избранное" style="width:36px;height:36px;font-size:18px;">☆</button>
-                </div>
-                <div class="game-rating" id="rating-standleolite">
-                    <span class="game-rating-stars" id="stars-standleolite">⭐⭐⭐⭐⭐</span>
-                    <span class="game-rating-count" id="count-standleolite">5.0 (0)</span>
-                    <span style="margin-left:auto;display:flex;gap:2px;">
-                        <button class="game-rating-btn" onclick="saveGameRating('standleolite',1)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('standleolite',2)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('standleolite',3)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('standleolite',4)">★</button>
-                        <button class="game-rating-btn" onclick="saveGameRating('standleolite',5)">★</button>
-                    </span>
-                </div>
-                <div class="game-stats">
-                    <div class="stat-box">
-                        <div class="stat-icon sym-pc"></div>
-                        <div class="stat-label">Размер</div>
-                        <div class="stat-value">700 MB</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-icon sym-android"></div>
-                        <div class="stat-label">iOS</div>
-                        <div class="stat-value">15+</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-icon sym-status"></div>
-                        <div class="stat-label">Статус</div>
-                        <div class="stat-value">Актив</div>
-                    </div>
-                </div>
-                <a href="https://drive.google.com/file/d/1OaRNMTerMeA8PEPaJY1xfQh65ro9T0sM/view?usp=drivesdk" target="_blank" style="text-decoration: none;">
-                    <button class="download-btn pulse" onclick="downloadGame('standleolite')" id="btn-standleolite">
-                        <span>Скачать</span>
-                        <div class="download-progress-container"><div class="download-progress-bar" id="prog-standleolite"></div></div>
-                    </button>
-                </a>
-                <div class="accordion" onclick="toggleAccordion(this)">
-                    <div class="accordion-left">
-                        <span class="accordion-icon sym-info"></span>
-                        <span class="accordion-text">О чите и функциях</span>
-                    </div>
-                    <span class="accordion-arrow sym-arrow-down"></span>
-                </div>
-                <div class="accordion-content">
-                    <strong>Описание обновления:</strong> Фикс багов оптимизация.<br><br>
-                    <strong>Функции чита:</strong> esp and more.
-                </div>
-            </div>
-
-            <div class="empty-state" id="games-empty" style="display:none;">
-                <div class="empty-icon sym-monitor"></div>
-                <div>
-                    <div class="empty-title">Ничего не найдено</div>
-                    <div class="empty-subtitle">Попробуйте другой запрос</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- APPS -->
-        <div class="page" id="page-apps">
-            <div class="search-bar">
-                <span class="search-icon sym-search"></span>
-                <input type="text" placeholder="Поиск приложения...">
-            </div>
-            <div class="empty-state">
-                <div class="empty-icon sym-wrench"></div>
-                <div>
-                    <div class="empty-title">Скоро здесь появятся приложения</div>
-                    <div class="empty-subtitle">Следите за обновлениями</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PROFILE -->
-        <div class="page" id="page-profile">
-            <div class="card glass profile-hero">
-                <div class="profile-avatar-large" id="profileAvatar" onclick="document.getElementById('avatarInput').click()" style="cursor:pointer;position:relative;overflow:hidden;">
-                    <span id="profileAvatarText">Г</span>
-                    <img id="profileAvatarImg" src="" style="width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;border-radius:50%;">
-                    <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.5);font-size:10px;padding:2px;color:#fff;display:none;" id="avatarOverlay">📷</div>
-                </div>
-                <input type="file" id="avatarInput" accept="image/*" style="display:none;" onchange="handleAvatarUpload(this)">
-                <div class="profile-name" id="profileName">Гость</div>
-                <div class="profile-role">Пользователь PANDA CHEATS</div>
-                <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px;">
-                    <button class="share-btn secondary" onclick="editName()" style="padding:10px 18px;font-size:13px;font-weight:500;">Изменить имя</button>
-                    <button class="share-btn secondary" onclick="logout()" style="padding:10px 18px;font-size:13px;font-weight:500;">Выйти из профиля</button>
-                </div>
-                <div class="profile-stats-grid">
-                    <div class="profile-stat">
-                        <div class="profile-stat-value" id="statDownloads">0</div>
-                        <div class="profile-stat-label">Скачиваний</div>
-                    </div>
-                    <div class="profile-stat">
-                        <div class="profile-stat-value" id="statReviews">0</div>
-                        <div class="profile-stat-label">Отзывов</div>
-                    </div>
-                    <div class="profile-stat">
-                        <div class="profile-stat-value" id="statLikes">0</div>
-                        <div class="profile-stat-label">Лайков</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card glass">
-                <div class="profile-section-title"><span class="sym-star"></span> Избранное</div>
-                <div id="profileFavorites">
-                    <div class="activity-item">
-                        <span class="activity-icon sym-star"></span>
-                        <span class="activity-text">Пока нет избранных игр</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card glass">
-                <div class="profile-section-title"><span class="sym-fire"></span> Активность</div>
-                <div id="profileActivity">
-                    <div class="activity-item">
-                        <span class="activity-icon sym-download"></span>
-                        <span class="activity-text">Пока нет активности</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card glass">
-                <div class="profile-section-title"><span class="sym-quote"></span> Мои отзывы</div>
-                <div id="profileReviews">
-                    <div class="activity-item">
-                        <span class="activity-icon sym-user"></span>
-                        <span class="activity-text">Отзывов пока нет</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ABOUT -->
-        <div class="page" id="page-about">
-            <div class="card glass about-hero">
-                <div class="about-logo">PANDA<br>CHEATS</div>
-                <div class="about-title">PANDA CHEATS</div>
-                <div class="about-desc">Надежный источник качественного мода для мобильных игр. Только проверенные файлы, только актуальные версии.</div>
-            </div>
-
-            <div class="card glass">
-                <div class="section-title">Наши ресурсы</div>
-                <a href="https://t.me/+YiCQpV4ixLhlNWVi" target="_blank" class="resource-item" style="color: var(--accent-text);">
-                    <div class="resource-icon sym-telegram"></div>
-                    <div class="resource-info">
-                        <div class="resource-name">Telegram канал</div>
-                        <div class="resource-handle">Подпишитесь - узнавайте о релизах первыми</div>
-                    </div>
-                    <span class="resource-arrow sym-arrow"></span>
-                </a>
-                <a href="https://t.me/confahub_vpn_bot?start=ref_qgabL6wbeyx-" target="_blank" class="resource-item" style="color: var(--accent-text);">
-                    <div class="resource-icon sym-shield"></div>
-                    <div class="resource-info">
-                        <div class="resource-name">Будь на связи - VPN</div>
-                        <div class="resource-handle">Быстро - Бесплатно - Безопасно</div>
-                    </div>
-                    <span class="resource-arrow sym-arrow"></span>
-                </a>
-                <a href="https://t.me/ane4kasvat" target="_blank" class="resource-item" style="color: var(--accent-text);">
-                    <div class="resource-icon sym-telegram"></div>
-                    <div class="resource-info">
-                        <div class="resource-name">Отправить файл</div>
-                        <div class="resource-handle">@ane4kasvat</div>
-                    </div>
-                    <span class="resource-arrow sym-arrow"></span>
-                </a>
-            </div>
-
-            <div class="card glass share-section">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-                    <span class="sym-share"></span>
-                    <div class="card-title">Поделиться сайтом</div>
-                </div>
-                <div class="share-box">
-                    <div class="share-url">https://pandacheats.replit.dev</div>
-                    <span class="share-copy sym-copy" onclick="copyLink()"></span>
-                </div>
-                <div class="share-buttons">
-                    <button class="share-btn secondary" onclick="copyLink()">Скопировать ссылку</button>
-                    <button class="share-btn primary"><span class="sym-globe"></span><span>Перейти на сайт</span></button>
-                </div>
-            </div>
-
-            <div class="card glass rating-section">
-                <div class="rating-title">⭐ Оцените нас</div>
-                <div class="stars">
-                    <span class="star" onclick="setRating(1)">★</span>
-                    <span class="star" onclick="setRating(2)">★</span>
-                    <span class="star" onclick="setRating(3)">★</span>
-                    <span class="star" onclick="setRating(4)">★</span>
-                    <span class="star" onclick="setRating(5)">★</span>
-                </div>
-                <div class="rating-average">Средняя оценка: <span>★ 4.8</span> (<span id="reviewCount">0</span> отзывов)</div>
-
-                <div class="reviews-divider"></div>
-
-                <div class="section-title" style="text-align: left; margin-bottom: 14px; padding-left: 8px;"><span class="sym-quote"></span> Отзывы пользователей</div>
-                <div class="reviews-container" id="reviewsList"></div>
-
-                <button class="show-more-btn" id="showMoreBtn" onclick="showMoreReviews()" style="display:none;">Показать больше отзывов</button>
-
-                <div class="review-input-wrapper">
-                    <div class="review-input-title"><span class="sym-user"></span> Написать отзыв</div>
-                    <textarea class="review-input" id="reviewText" placeholder="Расскажите о вашем опыте..."></textarea>
-                    <button class="review-submit-btn" onclick="submitReview()"><span class="sym-telegram"></span> Отправить отзыв</button>
+                    <div class="game-desc" style="margin-bottom: 16px; text-align: center;">Лучшая версия игры змейки — играй в мини змеинный шутер</div>
+                    <a href="https://www.dropbox.com/scl/fi/cod5ebuqaam7tv62mnajy/app-unsigned-1.apk?rlkey=wsdlmwhgwt5qzykrrl5872ibs&st=fludlllc&dl=1" class="download-btn" target="_blank">
+                        <i data-lucide="download" class="lucide-sm"></i>
+                        <span>Скачать игру</span>
+                    </a>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Welcome Modal -->
-    <div class="modal-overlay" id="welcomeModal">
-        <div class="modal">
-            <div class="modal-panda">P</div>
-            <div class="modal-title">Добро пожаловать!</div>
-            <div class="modal-subtitle">Введите имя, чтобы оставлять отзывы</div>
-            <input type="text" class="modal-input" placeholder="Ваше имя" id="userNameInput">
-            <button class="modal-btn" onclick="closeModal()">Продолжить</button>
-        </div>
-    </div>
-
-    <!-- Report Modal -->
-    <div class="modal-overlay" id="reportModal" style="display:none;">
-        <div class="modal">
-            <div class="modal-title">Пожаловаться</div>
-            <div class="modal-subtitle">Выберите причину жалобы</div>
-            <div class="report-reason" onclick="selectReport(this,'Спам')">Спам</div>
-            <div class="report-reason" onclick="selectReport(this,'Оскорбление')">Оскорбление</div>
-            <div class="report-reason" onclick="selectReport(this,'Оффтоп')">Оффтоп</div>
-            <div class="report-reason" onclick="selectReport(this,'Другое')">Другое</div>
-            <button class="modal-btn" onclick="submitReport()" style="margin-top:12px;">Отправить</button>
-            <button class="modal-btn" onclick="closeReportModal()" style="margin-top:8px;background:transparent;color:var(--text);border:1px solid var(--glass-border);">Отмена</button>
-        </div>
-    </div>
-
-    <div class="toast" id="toast"></div>
-
     <script>
-        // ========== PWA SERVICE WORKER ==========
-        if ('serviceWorker' in navigator) {
-            const swCode = `self.addEventListener('install', e => self.skipWaiting()); self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));`;
-            const blob = new Blob([swCode], {type: 'application/javascript'});
-            const swUrl = URL.createObjectURL(blob);
-            navigator.serviceWorker.register(swUrl).catch(() => {});
-        }
-
-        // ========== FIREBASE CONFIG (ЗАМЕНИТЕ НА СВОЙ) ==========
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID",
-            databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com"
-        };
-
-        let db = null, rtdb = null, firebaseApp = null;
-        let firebaseEnabled = false;
-
-        try {
-            if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
-                firebaseApp = firebase.initializeApp(firebaseConfig);
-                db = firebase.firestore();
-                rtdb = firebase.database();
-                firebaseEnabled = true;
-                console.log("Firebase подключен");
-            }
-        } catch(e) {
-            console.log("Firebase не настроен, используется localStorage режим");
-        }
-
-        // ========== PARTICLES ==========
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 30; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.top = Math.random() * 100 + '%';
-            p.style.animationDelay = Math.random() * 15 + 's';
-            p.style.animationDuration = (10 + Math.random() * 10) + 's';
-            particlesContainer.appendChild(p);
-        }
-
-        // ========== THEME ==========
-        let isDark = true;
-        function toggleTheme() {
-            isDark = !isDark;
-            document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
-            document.getElementById('themeBtn').innerHTML = isDark ? '<span class="sym-sun"></span>' : '<span class="sym-moon"></span>';
-            showToast(isDark ? 'Темная тема включена' : 'Светлая тема включена');
-        }
-
-        // ========== NAVIGATION ==========
-        function showPage(pageName) {
+        function switchTab(page, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('page-' + pageName).classList.add('active');
-            event.target.classList.add('active');
-            if (pageName === 'profile') updateProfile();
-            if (pageName === 'about') loadReviews();
+            document.querySelectorAll('.segment').forEach(s => s.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            btn.classList.add('active');
         }
-
-        // ========== USER ==========
-        let currentUser = localStorage.getItem('pandaUserName') || '';
-        let userId = localStorage.getItem('pandaUserId') || 'user_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('pandaUserId', userId);
-
-        function closeModal() {
-            const name = document.getElementById('userNameInput').value.trim();
-            if (name) {
-                currentUser = name;
-                localStorage.setItem('pandaUserName', name);
-                updateUserBadge();
-                initOnlineCounter();
-                document.getElementById('welcomeModal').style.display = 'none';
-                showToast('Привет, ' + name + '!');
-            } else {
-                document.getElementById('welcomeModal').style.display = 'none';
-                showToast('Привет, Гость!');
-            }
-        }
-
-        function updateUserBadge() {
-            const name = currentUser || 'Гость';
-            document.getElementById('profileName').textContent = name;
-            const avatarText = document.getElementById('profileAvatarText');
-            if (avatarText) avatarText.textContent = getAvatar(name);
-            const userBadge = document.getElementById('userBadge');
-            if (userBadge) {
-                userBadge.querySelector('span:last-child').textContent = name;
-            }
-        }
-
-        if (currentUser) {
-            updateUserBadge();
-            document.getElementById('welcomeModal').style.display = 'none';
-            initOnlineCounter();
-        }
-
-        function getAvatar(name) {
-            return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'Г';
-        }
-
-        // ========== TOAST ==========
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        // ========== DOWNLOADS ==========
-        function initDownloads() {
-            ['standchillow','pandasnake','pandablock','standleolite'].forEach(id => {
-                const count = localStorage.getItem('dl_' + id) || '0';
-                const el = document.getElementById('dl-' + id);
-                if (el) el.textContent = count;
-            });
-        }
-
-        function downloadGame(id) {
-            const btn = document.getElementById('btn-' + id);
-            const bar = document.getElementById('prog-' + id);
-            if (btn && bar) {
-                btn.classList.add('loading');
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += Math.random() * 15 + 5;
-                    if (progress >= 100) {
-                        progress = 100;
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            btn.classList.remove('loading');
-                            bar.style.width = '0%';
-                        }, 500);
-                    }
-                    bar.style.width = progress + '%';
-                }, 200);
-            }
-            let count = parseInt(localStorage.getItem('dl_' + id) || '0') + 1;
-            localStorage.setItem('dl_' + id, count);
-            const el = document.getElementById('dl-' + id);
-            if (el) el.textContent = count;
-            addActivity('Скачана игра ' + getGameName(id));
-            showToast('Загрузка началась!');
-            updateTopDownloads();
-        }
-
-        function getGameName(id) {
-            const map = {standchillow:'StandChillow',pandasnake:'PANDA SNAKE IO',pandablock:'Panda Block',standleolite:'StandLeo Lite'};
-            return map[id] || id;
-        }
-
-        // ========== SEARCH & AUTOCOMPLETE ==========
-        const gameNames = ['StandChillow', 'PANDA SNAKE IO', 'Panda Block', 'StandLeo Lite'];
-
-        function getGameRatings() {
-            return JSON.parse(localStorage.getItem('pandaGameRatings') || '{}');
-        }
-
-        function saveGameRating(gameId, rating) {
-            const ratings = getGameRatings();
-            if (!ratings[gameId]) ratings[gameId] = { sum: 0, count: 0, votes: {} };
-            const userPrev = ratings[gameId].votes[userId];
-            if (userPrev) {
-                ratings[gameId].sum -= userPrev;
-                ratings[gameId].count -= 1;
-            }
-            ratings[gameId].sum += rating;
-            ratings[gameId].count += 1;
-            ratings[gameId].votes[userId] = rating;
-            localStorage.setItem('pandaGameRatings', JSON.stringify(ratings));
-            renderGameRating(gameId);
-            showToast('Оценка сохранена!');
-        }
-
-        function renderGameRating(gameId) {
-            const ratings = getGameRatings();
-            const data = ratings[gameId] || { sum: 0, count: 0, votes: {} };
-            const avg = data.count > 0 ? (data.sum / data.count).toFixed(1) : '0.0';
-            const starsEl = document.getElementById('stars-' + gameId);
-            const countEl = document.getElementById('count-' + gameId);
-            if (starsEl) starsEl.textContent = '⭐'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
-            if (countEl) countEl.textContent = avg + ' (' + data.count + ')';
-        }
-
-        function initGameRatings() {
-            ['standchillow','pandasnake','pandablock','standleolite'].forEach(id => renderGameRating(id));
-        }
-
-        function handleSearch(query) {
-            filterGames(query);
-            showAutocomplete(query);
-            if (query.trim()) addToSearchHistory(query.trim());
-        }
-
-        function filterGames(query) {
-            const cards = document.querySelectorAll('#page-games .game-card');
-            let visible = 0;
-            cards.forEach(card => {
-                const name = card.querySelector('.game-name').textContent.toLowerCase();
-                const match = name.includes(query.toLowerCase());
-                card.style.display = match ? 'block' : 'none';
-                if (match) visible++;
-            });
-            document.getElementById('games-empty').style.display = (visible === 0 && query.trim() !== '') ? 'flex' : 'none';
-        }
-
-        function showAutocomplete(query) {
-            const dropdown = document.getElementById('gameAutocomplete');
-            if (!query.trim()) { dropdown.classList.remove('show'); return; }
-            const matches = gameNames.filter(n => n.toLowerCase().includes(query.toLowerCase()));
-            if (matches.length === 0) { dropdown.classList.remove('show'); return; }
-            dropdown.innerHTML = matches.map(m => `<div class="autocomplete-item" onclick="selectAutocomplete('${m}')">${m}</div>`).join('');
-            dropdown.classList.add('show');
-        }
-
-        function selectAutocomplete(name) {
-            document.getElementById('gameSearch').value = name;
-            document.getElementById('gameAutocomplete').classList.remove('show');
-            filterGames(name);
-        }
-
-        document.addEventListener('click', e => {
-            if (!e.target.closest('.search-bar')) {
-                document.getElementById('gameAutocomplete').classList.remove('show');
-            }
-        });
-
-        function addToSearchHistory(query) {
-            let history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
-            history = [query, ...history.filter(q => q !== query)].slice(0, 5);
-            localStorage.setItem('searchHistory', JSON.stringify(history));
-            renderSearchHistory();
-        }
-
-        function renderSearchHistory() {
-            const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
-            const container = document.getElementById('searchHistory');
-            if (!history.length) { container.innerHTML = ''; return; }
-            container.innerHTML = history.map(q => `
-                <span class="history-tag" onclick="document.getElementById('gameSearch').value='${q}';filterGames('${q}')">
-                    ${q} <span class="remove" onclick="event.stopPropagation();removeHistory('${q}')">×</span>
-                </span>
-            `).join('');
-        }
-
-        function removeHistory(query) {
-            let history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
-            history = history.filter(q => q !== query);
-            localStorage.setItem('searchHistory', JSON.stringify(history));
-            renderSearchHistory();
-        }
-
-        // ========== ACCORDION ==========
-        function toggleAccordion(el) {
-            const content = el.nextElementSibling;
-            if (content && content.classList.contains('accordion-content')) {
-                const isOpen = content.classList.contains('show');
-                document.querySelectorAll('.accordion-content.show').forEach(c => {
-                    c.classList.remove('show');
-                    c.previousElementSibling.classList.remove('open');
-                });
-                if (!isOpen) {
-                    content.classList.add('show');
-                    el.classList.add('open');
-                }
-            }
-        }
-
-        // ========== 3D TILT ==========
-        document.querySelectorAll('.game-card, .review-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 25;
-                const rotateY = (centerX - x) / 25;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = '';
-            });
-        });
-
-        // ========== ONLINE COUNTER (FIREBASE) ==========
-        function initOnlineCounter() {
-            if (!rtdb) {
-                document.getElementById('onlineBadge').style.display = 'flex';
-                document.getElementById('onlineCount').textContent = '1';
-                return;
-            }
-            document.getElementById('onlineBadge').style.display = 'flex';
-            const presenceRef = rtdb.ref('presence/' + userId);
-            const connectedRef = rtdb.ref('.info/connected');
-            connectedRef.on('value', snap => {
-                if (snap.val()) {
-                    presenceRef.onDisconnect().remove();
-                    presenceRef.set({online:true, name:currentUser || 'Гость', time:Date.now()});
-                }
-            });
-            rtdb.ref('presence').on('value', snap => {
-                const count = snap.numChildren();
-                document.getElementById('onlineCount').textContent = count;
-            });
-        }
-
-        // ========== REVIEWS ==========
-        let reviewsData = [];
-        let currentReportId = null;
-        const gradients = [
-            'linear-gradient(135deg, #555, #222)',
-            'linear-gradient(135deg, #444, #111)',
-            'linear-gradient(135deg, #666, #333)',
-            'linear-gradient(135deg, #333, #000)',
-            'linear-gradient(135deg, #777, #444)'
-        ];
-
-        function loadReviews() {
-            if (db) {
-                db.collection('reviews').orderBy('date','desc').onSnapshot(snapshot => {
-                    reviewsData = [];
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        data.id = doc.id;
-                        reviewsData.push(data);
-                    });
-                    renderReviews();
-                });
-            } else {
-                reviewsData = JSON.parse(localStorage.getItem('pandaReviews') || '[]');
-                renderReviews();
-            }
-        }
-
-        function renderReviews() {
-            const container = document.getElementById('reviewsList');
-            const liked = JSON.parse(localStorage.getItem('likedReviews') || '[]');
-            container.innerHTML = '';
-            reviewsData.forEach((r, idx) => {
-                const div = document.createElement('div');
-                div.className = 'review-card' + (idx >= 3 ? ' hidden-review' : '');
-                div.dataset.reviewId = r.id;
-                const isLiked = liked.includes(r.id);
-                const repliesHtml = (r.replies || []).map(rep => `
-                    <div class="reply-card">
-                        <div class="reply-header">
-                            <div class="reply-avatar">${getAvatar(rep.author)}</div>
-                            <div class="reply-author">${rep.author}</div>
-                            <div class="reply-date">${rep.date}</div>
-                        </div>
-                        <div class="reply-text">${rep.text}</div>
-                    </div>
-                `).join('');
-                div.innerHTML = `
-                    <div class="review-header">
-                        ${r.avatar ? `<img src="${r.avatar}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--glass-border);box-shadow:0 2px 8px var(--shadow);">` : `<div class="review-avatar" style="background:${r.gradient || gradients[0]};">${getAvatar(r.author)}</div>`}
-                        <div class="review-meta">
-                            <div class="review-author">${r.author}</div>
-                            <div class="review-stars">${'⭐'.repeat(r.rating)}</div>
-                            <div class="review-date">${r.date}</div>
-                        </div>
-                    </div>
-                    <div class="review-text">${r.text}</div>
-                    <div class="review-actions">
-                        <span class="review-like ${isLiked?'liked':''}" data-id="${r.id}" onclick="toggleLike(this)">👍 ${r.likes || 0}</span>
-                        <span class="review-reply-btn" onclick="toggleReplyForm('${r.id}')"><span class="sym-reply"></span> Ответить</span>
-                        <span class="review-report-btn" onclick="openReport('${r.id}')"><span class="sym-report"></span> Жалоба</span>
-                    </div>
-                    <div class="reply-form" id="replyForm-${r.id}">
-                        <textarea class="reply-input" placeholder="Ваш ответ..."></textarea>
-                        <button class="reply-submit" onclick="submitReply('${r.id}')">Отправить</button>
-                    </div>
-                    ${repliesHtml ? `<div class="replies-container">${repliesHtml}</div>` : ''}
-                `;
-                container.appendChild(div);
-            });
-
-            const showMore = document.getElementById('showMoreBtn');
-            showMore.style.display = reviewsData.length > 3 ? 'block' : 'none';
-            updateReviewCount();
-            updateProfileReviews();
-        }
-
-        function updateReviewCount() {
-            document.getElementById('reviewCount').textContent = reviewsData.length;
-        }
-
-        function showMoreReviews() {
-            document.querySelectorAll('.hidden-review').forEach(r => {
-                r.classList.remove('hidden-review');
-                r.style.animation = 'fadeIn 0.4s ease';
-            });
-            document.getElementById('showMoreBtn').style.display = 'none';
-        }
-
-        function setRating(n) {
-            currentRating = n;
-            document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('active', i < n));
-        }
-
-        let currentRating = 0;
-
-        function submitReview() {
-            const text = document.getElementById('reviewText').value.trim();
-            if (!text) { showToast('Введите текст отзыва'); return; }
-            if (currentRating === 0) { showToast('Поставьте оценку'); return; }
-
-            const userName = currentUser || 'Гость';
-            const avatarData = localStorage.getItem('pandaAvatar') || '';
-            const review = {
-                author: userName,
-                text: text,
-                rating: currentRating,
-                date: 'Только что',
-                likes: 1,
-                likedBy: [userId],
-                replies: [],
-                reports: [],
-                gradient: gradients[Math.floor(Math.random() * gradients.length)],
-                timestamp: Date.now(),
-                avatar: avatarData
-            };
-
-            if (db) {
-                db.collection('reviews').add(review).then(() => {
-                    document.getElementById('reviewText').value = '';
-                    currentRating = 0;
-                    document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
-                    showToast('Отзыв отправлен!');
-                    addActivity('Оставлен отзыв');
-                });
-            } else {
-                const avatarData2 = localStorage.getItem('pandaAvatar') || '';
-                review.avatar = avatarData2;
-                review.id = 'rev_' + Date.now();
-                reviewsData.unshift(review);
-                localStorage.setItem('pandaReviews', JSON.stringify(reviewsData));
-                const liked = JSON.parse(localStorage.getItem('likedReviews') || '[]');
-                liked.push(review.id);
-                localStorage.setItem('likedReviews', JSON.stringify(liked));
-                renderReviews();
-                document.getElementById('reviewText').value = '';
-                currentRating = 0;
-                document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
-                showToast('Отзыв отправлен!');
-                addActivity('Оставлен отзыв');
-            }
-        }
-
-        function toggleLike(el) {
-            const id = el.dataset.id;
-            const liked = JSON.parse(localStorage.getItem('likedReviews') || '[]');
-            let count = parseInt(el.textContent.replace(/[^0-9]/g, '')) || 0;
-            if (liked.includes(id)) {
-                liked.splice(liked.indexOf(id), 1);
-                count = Math.max(0, count - 1);
-                el.classList.remove('liked');
-            } else {
-                liked.push(id);
-                count++;
-                el.classList.add('liked');
-            }
-            localStorage.setItem('likedReviews', JSON.stringify(liked));
-            el.innerHTML = '👍 ' + count;
-
-            if (db) {
-                const ref = db.collection('reviews').doc(id);
-                ref.get().then(doc => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        const likedBy = data.likedBy || [];
-                        if (likedBy.includes(userId)) {
-                            ref.update({likes: Math.max(0, (data.likes||0)-1), likedBy: likedBy.filter(u=>u!==userId)});
-                        } else {
-                            ref.update({likes: (data.likes||0)+1, likedBy: [...likedBy, userId]});
-                        }
-                    }
-                });
-            }
-        }
-
-        function toggleReplyForm(id) {
-            const form = document.getElementById('replyForm-' + id);
-            form.classList.toggle('show');
-        }
-
-        function submitReply(reviewId) {
-            const form = document.getElementById('replyForm-' + reviewId);
-            const text = form.querySelector('.reply-input').value.trim();
-            if (!text) return;
-            const reply = {author: currentUser || 'Гость', text, date: 'Только что'};
-
-            if (db) {
-                const ref = db.collection('reviews').doc(reviewId);
-                ref.get().then(doc => {
-                    const data = doc.data();
-                    const replies = data.replies || [];
-                    ref.update({replies: [...replies, reply]});
-                });
-            } else {
-                const r = reviewsData.find(x => x.id === reviewId);
-                if (r) { r.replies = r.replies || []; r.replies.push(reply); localStorage.setItem('pandaReviews', JSON.stringify(reviewsData)); renderReviews(); }
-            }
-            form.querySelector('.reply-input').value = '';
-            form.classList.remove('show');
-            showToast('Ответ отправлен!');
-        }
-
-        function openReport(id) {
-            currentReportId = id;
-            document.getElementById('reportModal').style.display = 'flex';
-            document.querySelectorAll('.report-reason').forEach(r => r.classList.remove('selected'));
-        }
-
-        function closeReportModal() {
-            document.getElementById('reportModal').style.display = 'none';
-            currentReportId = null;
-        }
-
-        let currentReportReason = '';
-        function selectReport(el, reason) {
-            document.querySelectorAll('.report-reason').forEach(r => r.classList.remove('selected'));
-            el.classList.add('selected');
-            currentReportReason = reason;
-        }
-
-        function submitReport() {
-            if (!currentReportReason || !currentReportId) return;
-            if (db) {
-                const ref = db.collection('reviews').doc(currentReportId);
-                ref.get().then(doc => {
-                    const data = doc.data();
-                    const reports = data.reports || [];
-                    if (!reports.find(r => r.userId === userId)) {
-                        ref.update({reports: [...reports, {userId, reason: currentReportReason, date: new Date().toISOString()}]});
-                        showToast('Жалоба отправлена');
-                    } else {
-                        showToast('Вы уже жаловались');
-                    }
-                });
-            } else {
-                showToast('Жалоба отправлена (local)');
-            }
-            closeReportModal();
-        }
-
-        // ========== PROFILE ==========
-        function updateProfile() {
-            const downloads = ['standchillow','pandasnake','pandablock','standleolite'].reduce((sum,id)=>sum+parseInt(localStorage.getItem('dl_'+id)||0),0);
-            document.getElementById('statDownloads').textContent = downloads;
-            const reviews = JSON.parse(localStorage.getItem('pandaReviews') || '[]').filter(r => r.author === (currentUser || 'Гость')).length;
-            document.getElementById('statReviews').textContent = reviews;
-            const liked = JSON.parse(localStorage.getItem('likedReviews') || '[]').length;
-            document.getElementById('statLikes').textContent = liked;
-            loadAvatar();
-            renderFavorites();
-        }
-
-        function editName() {
-            const newName = prompt('Введите новое имя:', currentUser || 'Гость');
-            if (newName && newName.trim()) {
-                currentUser = newName.trim();
-                localStorage.setItem('pandaUserName', currentUser);
-                updateUserBadge();
-                updateProfile();
-                showToast('Имя изменено на ' + currentUser);
-            }
-        }
-
-        function logout() {
-            if (confirm('Выйти из профиля?')) {
-                localStorage.removeItem('pandaUserName');
-                localStorage.removeItem('pandaAvatar');
-                currentUser = '';
-                updateUserBadge();
-                updateProfile();
-                document.getElementById('welcomeModal').style.display = 'flex';
-                showToast('Вы вышли из профиля');
-            }
-        }
-
-        function handleAvatarUpload(input) {
-            const file = input.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const dataUrl = e.target.result;
-                localStorage.setItem('pandaAvatar', dataUrl);
-                loadAvatar();
-                showToast('Аватар обновлён');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function loadAvatar() {
-            const avatarData = localStorage.getItem('pandaAvatar');
-            const img = document.getElementById('profileAvatarImg');
-            const text = document.getElementById('profileAvatarText');
-            if (avatarData && img && text) {
-                img.src = avatarData;
-                img.style.display = 'block';
-                text.style.display = 'none';
-            } else if (img && text) {
-                img.style.display = 'none';
-                text.style.display = 'block';
-            }
-        }
-
-        function updateProfileReviews() {
-            const myReviews = reviewsData.filter(r => r.author === (currentUser || 'Гость'));
-            const container = document.getElementById('profileReviews');
-            if (!myReviews.length) {
-                container.innerHTML = `<div class="activity-item"><span class="activity-icon sym-user"></span><span class="activity-text">Отзывов пока нет</span></div>`;
-                return;
-            }
-            container.innerHTML = myReviews.map(r => `
-                <div class="activity-item">
-                    <span class="activity-icon sym-quote"></span>
-                    <span class="activity-text">${r.text.substring(0,50)}${r.text.length>50?'...':''}</span>
-                    <span class="activity-date">${r.date}</span>
-                </div>
-            `).join('');
-        }
-
-        function addActivity(text) {
-            let acts = JSON.parse(localStorage.getItem('pandaActivity') || '[]');
-            acts.unshift({text, time: new Date().toLocaleString()});
-            acts = acts.slice(0, 10);
-            localStorage.setItem('pandaActivity', JSON.stringify(acts));
-            renderActivity();
-        }
-
-        function renderActivity() {
-            const acts = JSON.parse(localStorage.getItem('pandaActivity') || '[]');
-            const container = document.getElementById('profileActivity');
-            if (!acts.length) return;
-            container.innerHTML = acts.map(a => `
-                <div class="activity-item">
-                    <span class="activity-icon sym-clock"></span>
-                    <span class="activity-text">${a.text}</span>
-                    <span class="activity-date">${a.time}</span>
-                </div>
-            `).join('');
-        }
-
-        // ========== COPY LINK ==========
-        function copyLink() {
-            navigator.clipboard.writeText('https://pandacheats.replit.dev');
-            showToast('Ссылка скопирована!');
-        }
-
-        // ========== FAVORITES ==========
-        function toggleFavorite(gameId) {
-            let favorites = JSON.parse(localStorage.getItem('pandaFavorites') || '[]');
-            const btn = document.getElementById('fav-' + gameId);
-            if (favorites.includes(gameId)) {
-                favorites = favorites.filter(id => id !== gameId);
-                if (btn) { btn.classList.remove('active'); btn.textContent = '☆'; }
-                showToast('Удалено из избранного');
-            } else {
-                favorites.push(gameId);
-                if (btn) { btn.classList.add('active'); btn.textContent = '⭐'; }
-                showToast('Добавлено в избранное');
-            }
-            localStorage.setItem('pandaFavorites', JSON.stringify(favorites));
-            renderFavorites();
-        }
-
-        function renderFavorites() {
-            const favorites = JSON.parse(localStorage.getItem('pandaFavorites') || '[]');
-            const container = document.getElementById('profileFavorites');
-            if (!container) return;
-            if (!favorites.length) {
-                container.innerHTML = `<div class="activity-item"><span class="activity-icon sym-star"></span><span class="activity-text">Пока нет избранных игр</span></div>`;
-                return;
-            }
-            const gameMap = {standchillow:'StandChillow',pandasnake:'PANDA SNAKE IO',pandablock:'Panda Block',standleolite:'StandLeo Lite'};
-            container.innerHTML = favorites.map(id => `
-                <div class="activity-item" style="cursor:pointer;" onclick="showPage('games');document.getElementById('gameSearch').value='${gameMap[id]||id}';filterGames('${gameMap[id]||id}');">
-                    <span class="activity-icon sym-star"></span>
-                    <span class="activity-text">${gameMap[id] || id}</span>
-                </div>
-            `).join('');
-        }
-
-        function initFavoriteButtons() {
-            const favorites = JSON.parse(localStorage.getItem('pandaFavorites') || '[]');
-            favorites.forEach(id => {
-                const btn = document.getElementById('fav-' + id);
-                if (btn) { btn.classList.add('active'); btn.textContent = '⭐'; }
-            });
-        }
-
-        // ========== TOP DOWNLOADS ==========
-        function updateTopDownloads() {
-            const games = [
-                {id:'standchillow', name:'StandChillow'},
-                {id:'pandasnake', name:'PANDA SNAKE IO'},
-                {id:'pandablock', name:'Panda Block'},
-                {id:'standleolite', name:'StandLeo Lite'}
-            ];
-            const stats = games.map(g => ({
-                name: g.name,
-                count: parseInt(localStorage.getItem('dl_' + g.id) || '0')
-            })).sort((a,b) => b.count - a.count);
-
-            for (let i = 0; i < 3; i++) {
-                const nameEl = document.getElementById('top' + (i+1) + '-name');
-                const countEl = document.getElementById('top' + (i+1) + '-count');
-                if (nameEl && countEl && stats[i]) {
-                    nameEl.textContent = stats[i].name;
-                    countEl.textContent = stats[i].count + ' скачиваний';
-                }
-            }
-        }
-
-        // ========== INIT ==========
-        initDownloads();
-        loadReviews();
-        renderSearchHistory();
-        renderActivity();
-        updateProfile();
-        renderFavorites();
-        initFavoriteButtons();
-        updateTopDownloads();
-        initGameRatings();
+        lucide.createIcons();
     </script>
 </body>
 </html>
